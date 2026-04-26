@@ -20,3 +20,51 @@ body {
 a {
   @apply transition-colors;
 }
+
+/* ============================================
+   FIRESTICK / TV D-PAD FOCUS STYLES
+   ============================================ */
+
+/* Remove default browser outline and replace with
+   a highly visible TV-friendly highlight */
+*:focus {
+  outline: none;
+}
+
+/* Nav links */
+nav a:focus,
+header a:focus {
+  outline: 3px solid #FFFFFF;
+  outline-offset: 4px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Movie / show cards — the most important ones */
+a:focus,
+button:focus,
+[tabindex]:focus {
+  outline: 3px solid #E50914;        /* Netflix-style red — change to match your brand */
+  outline-offset: 3px;
+  border-radius: 6px;
+  transform: scale(1.05);            /* Slight zoom so it stands out on a big TV */
+  transition: transform 0.15s ease;
+  z-index: 10;
+  position: relative;
+}
+
+/* Input fields (e.g. search bar) */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid #E50914;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Ensure cards don't get clipped when scaled */
+.card-container,
+.grid,
+.content-row {
+  overflow: visible !important;
+}
