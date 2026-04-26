@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { SearchX } from "lucide-react";
 import { tmdbImageUrl, type TMDBMediaItem } from "../../lib/tmdb";
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q")?.trim() ?? "";
   const [results, setResults] = useState<TMDBMediaItem[]>([]);
@@ -104,5 +104,20 @@ export default function SearchPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-semibold text-white">Search on Topic</h1>
+          <p className="text-sm text-topic-muted">Loading search...</p>
+        </div>
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 }
