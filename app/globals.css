@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-topic-bg text-white antialiased;
+  background-image: radial-gradient(circle at 20% 20%, #172554 0%, #070b14 55%);
+  background-attachment: fixed;
+}
+
+a {
+  @apply transition-colors;
+}
