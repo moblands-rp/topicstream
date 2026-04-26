@@ -3,68 +3,161 @@
 @tailwind utilities;
 
 :root {
+  --background: #0A0A0A;
+  --surface: #121212;
+  --surface2: #1C1C1E;
+  --card: #1F1F1F;
+  --text: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --accent: #FF2D55;
+  --accent-hover: #FF4D6F;
+  --border: #2C2C2E;
   color-scheme: dark;
 }
 
 html,
 body {
   min-height: 100%;
+  font-size: 1.125rem; /* Larger base text for TV/tablet readability */
 }
 
 body {
-  @apply bg-topic-bg text-white antialiased;
-  background-image: radial-gradient(circle at 20% 20%, #172554 0%, #070b14 55%);
-  background-attachment: fixed;
+  background-color: var(--background);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ====================== GLOBAL TV-FRIENDLY STYLES ====================== */
 
 a {
-  @apply transition-colors;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* ============================================
-   FIRESTICK / TV D-PAD FOCUS STYLES
-   ============================================ */
+button,
+a,
+[role="button"],
+input,
+select {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-/* Remove default browser outline and replace with
-   a highly visible TV-friendly highlight */
-*:focus {
+/* Remove default outlines and add highly visible TV focus rings */
+*:focus-visible {
   outline: none;
 }
 
-/* Nav links */
-nav a:focus,
-header a:focus {
-  outline: 3px solid #FFFFFF;
-  outline-offset: 4px;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Movie / show cards — the most important ones */
-a:focus,
-button:focus,
-[tabindex]:focus {
-  outline: 3px solid #E50914;        /* Netflix-style red — change to match your brand */
-  outline-offset: 3px;
-  border-radius: 6px;
-  transform: scale(1.05);            /* Slight zoom so it stands out on a big TV */
-  transition: transform 0.15s ease;
-  z-index: 10;
+/* TV / Remote friendly focus styles */
+nav a:focus-visible,
+button:focus-visible,
+.card:focus-visible,
+a:focus-visible {
+  outline: 4px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: 12px;
+  transform: scale(1.04);
+  z-index: 20;
   position: relative;
 }
 
-/* Input fields (e.g. search bar) */
-input:focus,
-textarea:focus,
-select:focus {
-  outline: 3px solid #E50914;
-  outline-offset: 2px;
-  border-radius: 4px;
+/* Larger, cleaner cards for big screens */
+.card {
+  background-color: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.4, 0.0, 0.2, 1), 
+              box-shadow 0.25s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-/* Ensure cards don't get clipped when scaled */
-.card-container,
-.grid,
-.content-row {
-  overflow: visible !important;
+.card:hover,
+.card:focus-visible {
+  transform: scale(1.06);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+}
+
+/* Buttons - big and pill-shaped like modern Apple UI */
+.button {
+  padding: 16px 32px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  letter-spacing: -0.02em;
+}
+
+.button-primary {
+  background-color: var(--accent);
+  color: white;
+}
+
+.button-primary:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+/* Player container - full bleed, pure black */
+.player-container {
+  background-color: #000000;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.player-container iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none;
+  background: #000000;
+}
+
+/* Loading state for player */
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+}
+
+/* Scrollbar styling for sleek look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3F3F46;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #52525B;
+}
+
+/* Utility for big screen spacing */
+.tv-padding {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .tv-padding {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* Background gradient for subtle depth (Apple-like) */
+.bg-topic-bg {
+  background-image: 
+    radial-gradient(circle at 30% 20%, rgba(255, 45, 85, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(30, 30, 40, 0.6) 0%, transparent 60%);
+  background-attachment: fixed;
 }
